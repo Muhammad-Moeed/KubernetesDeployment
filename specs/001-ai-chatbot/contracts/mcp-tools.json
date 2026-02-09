@@ -1,0 +1,395 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MCP Tools for AI Todo Chatbot",
+  "description": "Model Context Protocol tool definitions for task management operations",
+  "version": "1.0.0",
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "add_task",
+        "description": "Create a new task in the user's account. Extracts task details from natural language input.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "description": "Task title (1-200 characters)",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": {
+              "type": "string",
+              "description": "Optional task description (max 1000 characters)",
+              "maxLength": 1000,
+              "default": ""
+            },
+            "priority": {
+              "type": "string",
+              "enum": ["low", "medium", "high"],
+              "description": "Task priority level",
+              "default": "medium"
+            },
+            "due_date": {
+              "type": "string",
+              "format": "date",
+              "description": "Optional due date in ISO format (YYYY-MM-DD)",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "user_id": {
+              "type": "integer",
+              "description": "User ID from JWT token (automatically injected)"
+            }
+          },
+          "required": ["title", "user_id"]
+        },
+        "returns": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean"
+            },
+            "task": {
+              "type": "object",
+              "properties": {
+                "id": {"type": "integer"},
+                "title": {"type": "string"},
+                "description": {"type": "string"},
+                "status": {"type": "string"},
+                "priority": {"type": "string"},
+                "due_date": {"type": "string", "nullable": true},
+                "created_at": {"type": "string", "format": "date-time"}
+              }
+            },
+            "message": {"type": "string"}
+          }
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "list_tasks",
+        "description": "Retrieve all tasks or filtered tasks for the user. Returns task list with IDs, titles, status, and priority.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "status_filter": {
+              "type": "string",
+              "enum": ["pending", "in_progress", "completed"],
+              "description": "Optional filter by task status",
+              "nullable": true
+            },
+            "priority_filter": {
+              "type": "string",
+              "enum": ["low", "medium", "high"],
+              "description": "Optional filter by task priority",
+              "nullable": true
+            },
+            "user_id": {
+              "type": "integer",
+              "description": "User ID from JWT token (automatically injected)"
+            }
+          },
+          "required": ["user_id"]
+        },
+        "returns": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean"
+            },
+            "tasks": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {"type": "integer"},
+                  "title": {"type": "string"},
+                  "description": {"type": "string"},
+                  "status": {"type": "string"},
+                  "priority": {"type": "string"},
+                  "due_date": {"type": "string", "nullable": true},
+                  "created_at": {"type": "string", "format": "date-time"}
+                }
+              }
+            },
+            "count": {"type": "integer"},
+            "message": {"type": "string"}
+          }
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "complete_task",
+        "description": "Mark a task as completed. Requires task ID.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task_id": {
+              "type": "integer",
+              "description": "ID of the task to complete",
+              "minimum": 1
+            },
+            "user_id": {
+              "type": "integer",
+              "description": "User ID from JWT token (automatically injected)"
+            }
+          },
+          "required": ["task_id", "user_id"]
+        },
+        "returns": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean"
+            },
+            "task": {
+              "type": "object",
+              "properties": {
+                "id": {"type": "integer"},
+                "title": {"type": "string"},
+                "status": {"type": "string"},
+                "completed_at": {"type": "string", "format": "date-time"}
+              }
+            },
+            "message": {"type": "string"}
+          }
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "delete_task",
+        "description": "Delete a task from the user's account. Requires task ID.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task_id": {
+              "type": "integer",
+              "description": "ID of the task to delete",
+              "minimum": 1
+            },
+            "user_id": {
+              "type": "integer",
+              "description": "User ID from JWT token (automatically injected)"
+            }
+          },
+          "required": ["task_id", "user_id"]
+        },
+        "returns": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean"
+            },
+            "task_id": {"type": "integer"},
+            "message": {"type": "string"}
+          }
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "update_task",
+        "description": "Update properties of an existing task. At least one update parameter must be provided.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task_id": {
+              "type": "integer",
+              "description": "ID of the task to update",
+              "minimum": 1
+            },
+            "title": {
+              "type": "string",
+              "description": "New task title (1-200 characters)",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "description": {
+              "type": "string",
+              "description": "New task description (max 1000 characters)",
+              "maxLength": 1000
+            },
+            "priority": {
+              "type": "string",
+              "enum": ["low", "medium", "high"],
+              "description": "New task priority"
+            },
+            "due_date": {
+              "type": "string",
+              "format": "date",
+              "description": "New due date in ISO format (YYYY-MM-DD)",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "status": {
+              "type": "string",
+              "enum": ["pending", "in_progress", "completed"],
+              "description": "New task status"
+            },
+            "user_id": {
+              "type": "integer",
+              "description": "User ID from JWT token (automatically injected)"
+            }
+          },
+          "required": ["task_id", "user_id"],
+          "minProperties": 3
+        },
+        "returns": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean"
+            },
+            "task": {
+              "type": "object",
+              "properties": {
+                "id": {"type": "integer"},
+                "title": {"type": "string"},
+                "description": {"type": "string"},
+                "status": {"type": "string"},
+                "priority": {"type": "string"},
+                "due_date": {"type": "string", "nullable": true},
+                "updated_at": {"type": "string", "format": "date-time"}
+              }
+            },
+            "message": {"type": "string"}
+          }
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "get_user_info",
+        "description": "Retrieve user information from JWT token. Does not query the database.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "query_type": {
+              "type": "string",
+              "enum": ["email", "name", "user_id", "all"],
+              "description": "Type of user information to retrieve"
+            },
+            "user_id": {
+              "type": "integer",
+              "description": "User ID from JWT token (automatically injected)"
+            }
+          },
+          "required": ["query_type", "user_id"]
+        },
+        "returns": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean"
+            },
+            "user_info": {
+              "type": "object",
+              "properties": {
+                "user_id": {"type": "integer"},
+                "email": {"type": "string"},
+                "name": {"type": "string"}
+              }
+            },
+            "message": {"type": "string"}
+          }
+        }
+      }
+    }
+  ],
+  "error_codes": {
+    "INVALID_TITLE": "Task title is empty or exceeds maximum length",
+    "INVALID_PRIORITY": "Priority must be one of: low, medium, high",
+    "INVALID_STATUS": "Status must be one of: pending, in_progress, completed",
+    "INVALID_DATE": "Due date format is invalid (must be YYYY-MM-DD)",
+    "INVALID_TASK_ID": "Task ID must be a positive integer",
+    "TASK_NOT_FOUND": "Task with specified ID not found or belongs to another user",
+    "ALREADY_COMPLETED": "Task is already marked as completed",
+    "NO_UPDATES": "No update parameters provided",
+    "INVALID_FILTER": "Invalid status or priority filter value",
+    "INVALID_QUERY_TYPE": "Query type must be one of: email, name, user_id, all",
+    "DATABASE_ERROR": "Database operation failed",
+    "TOKEN_INVALID": "JWT token is invalid or expired"
+  },
+  "usage_examples": [
+    {
+      "intent": "add_task",
+      "user_message": "Add a task to buy groceries",
+      "tool_call": {
+        "name": "add_task",
+        "arguments": {
+          "title": "buy groceries",
+          "priority": "medium",
+          "user_id": 123
+        }
+      },
+      "response": "I've created a task 'buy groceries' with ID 45. It's set to medium priority."
+    },
+    {
+      "intent": "list_tasks",
+      "user_message": "Show me all my tasks",
+      "tool_call": {
+        "name": "list_tasks",
+        "arguments": {
+          "user_id": 123
+        }
+      },
+      "response": "You have 5 tasks: 1) Buy groceries (pending, medium), 2) Finish report (in_progress, high), ..."
+    },
+    {
+      "intent": "complete_task",
+      "user_message": "Mark task 123 as done",
+      "tool_call": {
+        "name": "complete_task",
+        "arguments": {
+          "task_id": 123,
+          "user_id": 123
+        }
+      },
+      "response": "Great! I've marked task 123 'Buy groceries' as completed."
+    },
+    {
+      "intent": "delete_task",
+      "user_message": "Delete task 456",
+      "tool_call": {
+        "name": "delete_task",
+        "arguments": {
+          "task_id": 456,
+          "user_id": 123
+        }
+      },
+      "response": "I've deleted task 456 'Call dentist' from your account."
+    },
+    {
+      "intent": "update_task",
+      "user_message": "Update task 789 to high priority",
+      "tool_call": {
+        "name": "update_task",
+        "arguments": {
+          "task_id": 789,
+          "priority": "high",
+          "user_id": 123
+        }
+      },
+      "response": "I've updated task 789 'Finish report' to high priority."
+    },
+    {
+      "intent": "get_user_info",
+      "user_message": "What's my email?",
+      "tool_call": {
+        "name": "get_user_info",
+        "arguments": {
+          "query_type": "email",
+          "user_id": 123
+        }
+      },
+      "response": "Your email address is: user@example.com"
+    }
+  ]
+}

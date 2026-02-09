@@ -1,0 +1,28 @@
+# Project-specific
+.env
+.env.local
+.env.*.local
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+*.code-workspace
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Documentation
+docs/_build/
+
+.vercel
+.env*.local

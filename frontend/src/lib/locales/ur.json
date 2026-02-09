@@ -1,0 +1,95 @@
+{
+  "common": {
+    "appName": "ٹوڈو ایپ",
+    "loading": "لوڈ ہو رہا ہے...",
+    "error": "خرابی",
+    "success": "کامیابی",
+    "cancel": "منسوخ کریں",
+    "save": "محفوظ کریں",
+    "delete": "حذف کریں",
+    "edit": "ترمیم کریں",
+    "create": "بنائیں",
+    "search": "تلاش کریں",
+    "filter": "فلٹر کریں",
+    "sort": "ترتیب دیں",
+    "clear": "صاف کریں"
+  },
+  "nav": {
+    "tasks": "ٹاسک",
+    "settings": "ترتیبات",
+    "logout": "لاگ آؤٹ"
+  },
+  "auth": {
+    "login": "سائن ان",
+    "signup": "سائن اپ",
+    "email": "ای میل",
+    "password": "پاس ورڈ",
+    "loginTitle": "خوش آمدید",
+    "signupTitle": "اکاؤنٹ بنائیں",
+    "alreadyHaveAccount": "پہلے سے اکاؤنٹ ہے؟",
+    "dontHaveAccount": "اکاؤنٹ نہیں ہے؟",
+    "loginError": "غلط ای میل یا پاس ورڈ",
+    "signupError": "اکاؤنٹ بنانے میں ناکامی"
+  },
+  "tasks": {
+    "title": "ٹاسک",
+    "addTask": "ٹاسک شامل کریں",
+    "editTask": "ٹاسک میں ترمیم کریں",
+    "deleteTask": "ٹاسک حذف کریں",
+    "deleteConfirm": "کیا آپ واقعی اس ٹاسک کو حذف کرنا چاہتے ہیں؟",
+    "noTasks": "ابھی تک کوئی ٹاسک نہیں",
+    "noTasksDescription": "شروع کرنے کے لیے اپنا پہلا ٹاسک بنائیں",
+    "noResults": "آپ کے فلٹرز سے کوئی ٹاسک میل نہیں کھاتا",
+    "taskTitle": "عنوان",
+    "taskDescription": "تفصیل",
+    "taskPriority": "ترجیح",
+    "taskTags": "ٹیگز",
+    "taskDueDate": "آخری تاریخ",
+    "taskCompleted": "مکمل",
+    "priority": {
+      "high": "زیادہ",
+      "medium": "درمیانی",
+      "low": "کم"
+    },
+    "status": {
+      "all": "تمام",
+      "pending": "زیر التواء",
+      "completed": "مکمل"
+    },
+    "overdue": "تاریخ گزر گئی"
+  },
+  "settings": {
+    "title": "ترتیبات",
+    "theme": "تھیم",
+    "language": "زبان",
+    "light": "روشن",
+    "dark": "تاریک"
+  },
+  "dashboard": {
+    "title": "ڈیش بورڈ",
+    "welcome": "خوش آمدید",
+    "totalTasks": "کل ٹاسکس",
+    "completedTasks": "مکمل شدہ ٹاسکس",
+    "incompleteTasks": "نامکمل ٹاسکس",
+    "taskCompletion": "ٹاسک کی تکمیل",
+    "tasksCompleted": "ٹاسکس مکمل ہوئے",
+    "recentlyAdded": "حال ہی میں شامل / اپ ڈیٹ شدہ ٹاسکس",
+    "noTasksInDashboard": "ابھی تک کوئی ٹاسک نہیں۔ شروع کرنے کے لیے ایک بنائیں!"
+  },
+  "landing": {
+    "hero": "اپنے ٹاسک مؤثر طریقے سے منظم کریں",
+    "subtitle": "جدید خصوصیات کے ساتھ ایک پیشہ ورانہ ٹوڈو ایپ",
+    "features": {
+      "secure": "محفوظ اور نجی",
+      "secureDesc": "آپ کے ٹاسک صارف کی تنہائی کے ساتھ محفوظ ہیں",
+      "advanced": "جدید فلٹرز",
+      "advancedDesc": "اپنے ٹاسک آسانی سے تلاش، فلٹر اور ترتیب دیں",
+      "multilingual": "کثیر لسانی",
+      "multilingualDesc": "انگریزی اور اردو کے لیے RTL کے ساتھ مکمل معاونت",
+      "voice": "آواز ان پٹ",
+      "voiceDesc": "آواز کے احکامات کے ساتھ ہاتھ سے آزاد ٹاسک بنائیں"
+    },
+    "getStarted": "شروع کریں",
+    "signIn": "سائن ان"
+  }
+}

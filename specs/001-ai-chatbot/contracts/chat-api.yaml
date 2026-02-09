@@ -1,0 +1,252 @@
+openapi: 3.0.3
+info:
+  title: AI Todo Chatbot API
+  description: Chat endpoint for natural language task management
+  version: 1.0.0
+  contact:
+    name: Todo App Team
+
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+  - url: https://api.todo-app.com
+    description: Production server
+
+paths:
+  /api/{user_id}/chat:
+    post:
+      summary: Send chat message
+      description: |
+        Send a natural language message to the AI chatbot for task management.
+        The chatbot will detect intent, execute appropriate MCP tools, and return
+        a natural language response.
+      operationId: sendChatMessage
+      tags:
+        - Chat
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          description: User ID (must match JWT token user_id)
+          schema:
+            type: integer
+            example: 123
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatRequest'
+            examples:
+              addTask:
+                summary: Add task
+                value:
+                  message: "Add a task to buy groceries"
+                  conversation_id: null
+              listTasks:
+                summary: List tasks
+                value:
+                  message: "Show me all my tasks"
+                  conversation_id: "550e8400-e29b-41d4-a716-446655440000"
+              urduMessage:
+                summary: Urdu message
+                value:
+                  message: "ٹاسک شامل کریں: دودھ خریدنا"
+                  conversation_id: "550e8400-e29b-41d4-a716-446655440000"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatResponse'
+              examples:
+                taskCreated:
+                  summary: Task created successfully
+                  value:
+                    success: true
+                    response: "I've created a task 'buy groceries' with ID 45. It's set to medium priority."
+                    conversation_id: "550e8400-e29b-41d4-a716-446655440000"
+                    timestamp: "2026-02-09T10:30:00Z"
+                tasksList:
+                  summary: Tasks listed
+                  value:
+                    success: true
+                    response: "You have 5 tasks: 1) Buy groceries (pending, medium), 2) Finish report (in_progress, high), 3) Call dentist (pending, low), 4) Review PR (pending, medium), 5) Update docs (completed, low)"
+                    conversation_id: "550e8400-e29b-41d4-a716-446655440000"
+                    timestamp: "2026-02-09T10:31:00Z"
+        '400':
+          description: Bad request (invalid message format)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error:
+                  code: "INVALID_MESSAGE"
+                  message: "Message text cannot be empty"
+                  details: "Please provide a message"
+        '401':
+          description: Unauthorized (invalid or expired JWT token)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error:
+                  code: "UNAUTHORIZED"
+                  message: "Invalid or expired token"
+                  details: "Please log in again"
+        '403':
+          description: Forbidden (user_id mismatch)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error:
+                  code: "FORBIDDEN"
+                  message: "User ID mismatch"
+                  details: "Token user_id does not match URL user_id"
+        '429':
+          description: Too many requests (rate limit exceeded)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error:
+                  code: "RATE_LIMIT_EXCEEDED"
+                  message: "Too many requests"
+                  details: "Maximum 60 messages per minute. Please try again later."
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error:
+                  code: "INTERNAL_ERROR"
+                  message: "An unexpected error occurred"
+                  details: "Please try again in a moment"
+        '503':
+          description: Service unavailable (Cohere API error)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error:
+                  code: "SERVICE_UNAVAILABLE"
+                  message: "AI service temporarily unavailable"
+                  details: "Please try again in a moment"
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token from Better Auth authentication
+
+  schemas:
+    ChatRequest:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          minLength: 1
+          maxLength: 1000
+          description: User's natural language message
+          example: "Add a task to buy groceries"
+        conversation_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: |
+            Existing conversation ID (null for new conversation).
+            Frontend should persist this ID in local storage.
+          example: "550e8400-e29b-41d4-a716-446655440000"
+
+    ChatResponse:
+      type: object
+      required:
+        - success
+        - response
+        - conversation_id
+        - timestamp
+      properties:
+        success:
+          type: boolean
+          description: Whether the request was successful
+          example: true
+        response:
+          type: string
+          description: Natural language response from the chatbot
+          example: "I've created a task 'buy groceries' with ID 45."
+        conversation_id:
+          type: string
+          format: uuid
+          description: Conversation ID (new or existing)
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        timestamp:
+          type: string
+          format: date-time
+          description: Response timestamp (ISO 8601)
+          example: "2026-02-09T10:30:00Z"
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: object
+          required:
+            - code
+            - message
+          properties:
+            code:
+              type: string
+              description: Error code for programmatic handling
+              example: "TASK_NOT_FOUND"
+            message:
+              type: string
+              description: Human-readable error message
+              example: "Task with ID 999 not found"
+            details:
+              type: string
+              description: Additional error details or suggestions
+              example: "Please check the task ID and try again"
+
+  examples:
+    EnglishMessages:
+      summary: Common English messages
+      value:
+        - "Add a task to buy groceries"
+        - "Create a high priority task to finish the report by Friday"
+        - "Show me all my tasks"
+        - "List my incomplete tasks"
+        - "Mark task 123 as done"
+        - "Delete task 456"
+        - "Update task 789 to high priority"
+        - "What's my email?"
+        - "What's my name?"
+
+    UrduMessages:
+      summary: Common Urdu messages
+      value:
+        - "ٹاسک شامل کریں: دودھ خریدنا"
+        - "میرے تمام کام دکھاؤ"
+        - "ٹاسک 123 مکمل کریں"
+        - "کام 456 حذف کریں"
+        - "میری ای میل کیا ہے؟"
+
+tags:
+  - name: Chat
+    description: AI chatbot endpoints for natural language task management

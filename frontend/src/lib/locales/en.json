@@ -1,0 +1,95 @@
+{
+  "common": {
+    "appName": "Listify",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "clear": "Clear"
+  },
+  "nav": {
+    "tasks": "Tasks",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "auth": {
+    "login": "Sign In",
+    "signup": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "loginTitle": "Welcome Back",
+    "signupTitle": "Create Account",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "loginError": "Invalid email or password",
+    "signupError": "Failed to create account"
+  },
+  "tasks": {
+    "title": "Tasks",
+    "addTask": "Add Task",
+    "editTask": "Edit Task",
+    "deleteTask": "Delete Task",
+    "deleteConfirm": "Are you sure you want to delete this task?",
+    "noTasks": "No tasks yet",
+    "noTasksDescription": "Create your first task to get started",
+    "noResults": "No tasks match your filters",
+    "taskTitle": "Title",
+    "taskDescription": "Description",
+    "taskPriority": "Priority",
+    "taskTags": "Tags",
+    "taskDueDate": "Due Date",
+    "taskCompleted": "Completed",
+    "priority": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "status": {
+      "all": "All",
+      "pending": "Pending",
+      "completed": "Completed"
+    },
+    "overdue": "Overdue"
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": "Theme",
+    "language": "Language",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "dashboard": {
+    "title": "Listify",
+    "welcome": "Welcome back",
+    "totalTasks": "Total Tasks",
+    "completedTasks": "Completed Tasks",
+    "incompleteTasks": "Incomplete Tasks",
+    "taskCompletion": "Task Completion",
+    "tasksCompleted": "tasks completed",
+    "recentlyAdded": "Recently Added / Updated Tasks",
+    "noTasksInDashboard": "No tasks yet. Create one to get started!"
+  },
+  "landing": {
+    "hero": "Manage Your Tasks Efficiently",
+    "subtitle": "A professional todo app with advanced features",
+    "features": {
+      "secure": "Secure & Private",
+      "secureDesc": "Your tasks are protected with user isolation",
+      "advanced": "Advanced Filters",
+      "advancedDesc": "Search, filter, and sort your tasks easily",
+      "multilingual": "Multilingual",
+      "multilingualDesc": "Full support for English and Urdu with RTL",
+      "voice": "Voice Input",
+      "voiceDesc": "Create tasks hands-free with voice commands"
+    },
+    "getStarted": "Get Started",
+    "signIn": "Sign In"
+  }
+}

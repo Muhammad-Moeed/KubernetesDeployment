@@ -1,0 +1,29 @@
+{
+  "chat": {
+    "title": "AI Assistant",
+    "placeholder": "Type a message...",
+    "send": "Send",
+    "voiceInput": "Voice input",
+    "voiceInputNotSupported": "Voice input not supported in this browser",
+    "startListening": "Start voice input",
+    "stopListening": "Stop listening",
+    "close": "Close chat",
+    "welcome": {
+      "title": "Welcome to AI Assistant",
+      "description": "I can help you manage your tasks. Try saying:",
+      "examples": [
+        "Add a task to buy groceries",
+        "Show me all my tasks",
+        "Mark task 5 as done",
+        "Delete task 3",
+        "Update task 2 to high priority"
+      ]
+    },
+    "errors": {
+      "sendFailed": "Failed to send message. Please try again.",
+      "networkError": "Network error. Please check your connection.",
+      "authError": "Authentication error. Please log in again.",
+      "voicePermissionDenied": "Microphone permission denied. Please enable it in your browser settings."
+    }
+  }
+}
