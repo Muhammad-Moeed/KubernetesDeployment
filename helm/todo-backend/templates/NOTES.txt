@@ -1,0 +1,53 @@
+1. Get the application URL by running these commands:
+{{- if eq .Values.service.type "ClusterIP" }}
+  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "todo-backend.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+  export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Release.Namespace }} $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  echo "Visit http://127.0.0.1:8000 to access the Todo App Backend"
+  kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8000:$CONTAINER_PORT
+
+  NOTE: The backend is configured as ClusterIP and is only accessible from within the cluster.
+  The frontend service will communicate with it via: http://{{ include "todo-backend.fullname" . }}:{{ .Values.service.port }}
+{{- else if eq .Values.service.type "NodePort" }}
+  export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "todo-backend.fullname" . }})
+  export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+  echo "Visit http://$NODE_IP:$NODE_PORT to access the Todo App Backend"
+{{- else if eq .Values.service.type "LoadBalancer" }}
+  NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+  You can watch the status by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "todo-backend.fullname" . }}'
+  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "todo-backend.fullname" . }} --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
+  echo "Visit http://$SERVICE_IP:{{ .Values.service.port }} to access the Todo App Backend"
+{{- end }}
+
+2. Check the deployment status:
+  kubectl get deployment {{ include "todo-backend.fullname" . }} -n {{ .Release.Namespace }}
+
+3. View the pods:
+  kubectl get pods -l app=todo-backend -n {{ .Release.Namespace }}
+
+4. Check the logs:
+  kubectl logs -l app=todo-backend -n {{ .Release.Namespace }} --tail=50
+
+5. Test the health endpoint:
+  kubectl run curl-test --image=curlimages/curl --rm -it --restart=Never -- curl http://{{ include "todo-backend.fullname" . }}:{{ .Values.service.port }}/health
+
+6. Verify database connectivity:
+  kubectl logs -l app=todo-backend -n {{ .Release.Namespace }} | grep -i "database\|connection"
+
+7. Test the API documentation:
+  kubectl --namespace {{ .Release.Namespace }} port-forward svc/{{ include "todo-backend.fullname" . }} 8000:{{ .Values.service.port }}
+  Then visit http://localhost:8000/docs in your browser
+
+IMPORTANT: Make sure to update the secrets in values.yaml with your actual credentials:
+  - DATABASE_URL: Your Neon PostgreSQL connection string
+  - COHERE_API_KEY: Your Cohere API key
+  - BETTER_AUTH_SECRET: Your Better Auth secret
+  - JWT_SECRET: Your JWT signing secret
+
+You can update secrets using:
+  helm upgrade {{ .Release.Name }} ./todo-backend \
+    --set secrets.DATABASE_URL="your-database-url" \
+    --set secrets.COHERE_API_KEY="your-cohere-key" \
+    --set secrets.BETTER_AUTH_SECRET="your-auth-secret" \
+    --set secrets.JWT_SECRET="your-jwt-secret"
+
+Thank you for deploying Todo App Backend with Helm!

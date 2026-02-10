@@ -1,27 +1,27 @@
 <!--
 SYNC IMPACT REPORT
 ==================
-Version Change: 1.0.0 → 1.1.0
-Bump Rationale: MINOR - Added new Phase 3 section with AI Chatbot principles and standards
+Version Change: 1.1.0 → 1.2.0
+Bump Rationale: MINOR - Added new Phase 4 section with Local Kubernetes Deployment principles and standards
 
 Modified Principles:
 - None (existing principles unchanged)
 
 Added Sections:
-- Phase 3 Update - AI Chatbot (complete new section with principles, standards, constraints, success criteria)
+- Phase 4 Update - Local Kubernetes Deployment (complete new section with project scope, stack additions, core principles, key standards, constraints, success criteria, and Phase 4 agents)
 
 Removed Sections:
 - None
 
 Templates Requiring Updates:
-✅ plan-template.md - Reviewed, no updates needed (Constitution Check section is generic)
-✅ spec-template.md - Reviewed, no updates needed (template structure remains compatible)
-✅ tasks-template.md - Reviewed, no updates needed (task organization principles remain valid)
+✅ plan-template.md - Reviewed, no updates needed (Constitution Check section is generic and applies to infrastructure)
+✅ spec-template.md - Reviewed, no updates needed (template structure remains compatible with infrastructure specs)
+✅ tasks-template.md - Reviewed, no updates needed (task organization principles apply to deployment tasks)
 
 Follow-up TODOs:
 - None (all placeholders filled, all templates validated)
 
-Date: 2026-02-09
+Date: 2026-02-10
 -->
 
 # Evolution of Todo Constitution
@@ -209,6 +209,136 @@ Chatbot must respect JWT-based user isolation. All task operations execute withi
 - Demo video showing voice input creating and managing tasks
 - Specification artifacts for all three chatbot specs (architecture, tools, frontend)
 
+## Phase 4 Update - Local Kubernetes Deployment
+
+### Project Scope
+Deploy Phase 3 AI Todo Chatbot application on local Kubernetes cluster (Minikube) with containerized frontend and backend services, enabling scalable and production-ready infrastructure.
+
+### Stack Additions
+- **Docker**: Container runtime with Gordon AI for Dockerfile generation
+- **Helm Charts**: Kubernetes package manager for deployment manifests
+- **Minikube**: Local Kubernetes cluster for development and testing
+- **kubectl-ai**: AI-powered Kubernetes command-line tool
+- **kagent**: Kubernetes agent for intelligent cluster operations
+
+### Core Principles
+
+#### XI. Spec-Driven Infrastructure Automation
+All infrastructure components (Dockerfiles, Helm charts, Kubernetes manifests) must originate from refined specifications in `/specs/infrastructure/`. No manual infrastructure code permitted. AI tools (Gordon, kubectl-ai, kagent) must be used for all deployment operations.
+
+#### XII. Stateless and Scalable Deployment
+Frontend and backend services must be deployed as stateless containers with horizontal scaling capabilities. Database connections must use external Neon PostgreSQL (not in-cluster). No persistent volumes for application state.
+
+#### XIII. Containerization Best Practices
+Dockerfiles must follow multi-stage build patterns, minimize image size, and use non-root users. Frontend container serves static Next.js build. Backend container runs FastAPI with production ASGI server (Gunicorn/Uvicorn).
+
+#### XIV. Infrastructure as Code
+All Kubernetes resources (Deployments, Services, ConfigMaps, Secrets) must be defined in Helm charts with parameterized values. No imperative kubectl commands for resource creation. Version control all infrastructure code.
+
+#### XV. AI-Powered Deployment Workflow
+Phase 4 implementation must utilize all five specialized Kubernetes agents:
+- `k8s-orchestrator`: Coordinates full deployment workflow
+- `docker-builder`: Creates optimized container images
+- `helm-chart-builder`: Generates Kubernetes manifests
+- `k8s-ai-deployer`: Executes deployment with AI tools
+- `k8s-deployment-tester`: Validates cluster health
+
+No manual deployment steps permitted. All operations through agents and AI tools only.
+
+### Key Standards
+
+#### Docker Standards
+- Multi-stage builds for frontend (build → production) and backend (dependencies → runtime)
+- Alpine or distroless base images for minimal attack surface
+- Non-root user execution in containers
+- `.dockerignore` files to exclude unnecessary files
+- Health check endpoints exposed for Kubernetes probes
+- Environment variables for configuration (no hardcoded values)
+
+#### Helm Chart Standards
+- Separate charts for frontend and backend services
+- Parameterized values in `values.yaml` (replicas, resources, image tags)
+- Kubernetes Deployments with rolling update strategy
+- Services with ClusterIP (internal) or NodePort (external access)
+- ConfigMaps for non-sensitive configuration
+- Secrets for sensitive data (JWT secret, database URL, API keys)
+- Resource requests and limits defined for all containers
+- Liveness and readiness probes configured
+
+#### Kubernetes Deployment Standards
+- Deploy on Minikube with at least 2 CPU cores and 4GB RAM
+- Frontend accessible via NodePort service on Minikube IP
+- Backend accessible internally via ClusterIP service
+- Use kubectl-ai for deployment commands with natural language
+- Use kagent for cluster health checks and troubleshooting
+- Namespace isolation (e.g., `todo-app` namespace)
+- Labels and selectors for service discovery
+
+#### Testing and Validation Standards
+- Pod health checks pass (all pods in Running state)
+- Service connectivity verified (frontend can reach backend)
+- Scaling tests pass (scale replicas up/down successfully)
+- Application functionality verified (chatbot works via Minikube IP)
+- Resource utilization monitored (CPU/memory within limits)
+
+### Constraints
+
+#### Existing Infrastructure
+- Must use existing `/frontend` and `/backend` folders for source code
+- Must maintain Phase 3 chatbot functionality without modifications
+- Must use existing Neon PostgreSQL database (external to cluster)
+- Must preserve Better Auth JWT authentication flow
+
+#### Implementation Restrictions
+- No manual code modifications to frontend or backend
+- All infrastructure code generated by agents only
+- Local deployment only (no cloud providers yet)
+- No in-cluster database (use external Neon PostgreSQL)
+- No manual kubectl commands (use kubectl-ai/kagent)
+
+#### Resource Constraints
+- Minikube cluster with minimum 2 CPU cores and 4GB RAM
+- Frontend container: max 512MB memory, 0.5 CPU
+- Backend container: max 1GB memory, 1 CPU
+- Total cluster resource usage under 3GB RAM
+
+### Success Criteria
+
+#### Deployment Success
+- Application runs successfully on Minikube cluster
+- All pods in Running state with 0 restarts
+- Frontend accessible via Minikube NodePort service
+- Backend accessible internally from frontend pods
+- Database connectivity verified (Neon PostgreSQL external)
+
+#### Functionality Validation
+- Chatbot accessible via Minikube IP in browser
+- Users can register, login, and manage tasks via chat
+- Voice commands and Urdu language support functional
+- JWT authentication works across containerized services
+- All Phase 3 features operational in Kubernetes environment
+
+#### Scaling and Health
+- Horizontal pod autoscaling configured (optional)
+- Manual scaling tests pass (scale frontend/backend replicas)
+- Liveness probes prevent unhealthy pod traffic
+- Readiness probes ensure zero-downtime deployments
+- Resource limits prevent cluster resource exhaustion
+
+#### Documentation and Submission
+- Demo video shows complete deployment process using AI tools
+- Infrastructure specs documented in `/specs/infrastructure/`
+- Helm charts and Dockerfiles committed to repository
+- README updated with Minikube setup and deployment instructions
+- Submission includes working Kubernetes deployment
+
+#### Phase 4 Agents Utilization
+- `k8s-orchestrator`: Documented usage in deployment workflow
+- `docker-builder`: Dockerfiles generated and optimized
+- `helm-chart-builder`: Helm charts created with best practices
+- `k8s-ai-deployer`: Deployment executed with kubectl-ai/kagent
+- `k8s-deployment-tester`: Health checks and validation completed
+
 ## Governance
 
 This Constitution supersedes all other development practices and documentation. All code generation, architectural decisions, and feature implementations must comply with these principles.
@@ -222,4 +352,4 @@ Constitutional amendments require documented justification, stakeholder approval
 ### Compliance Verification
 The project maintainer is responsible for ensuring all contributors and subagents adhere to these principles. All pull requests and code reviews must verify constitutional compliance.
 
-**Version**: 1.1.0 | **Ratified**: 2026-01-05 | **Last Amended**: 2026-02-09
+**Version**: 1.2.0 | **Ratified**: 2026-01-05 | **Last Amended**: 2026-02-10

@@ -1,0 +1,33 @@
+1. Get the application URL by running these commands:
+{{- if eq .Values.service.type "NodePort" }}
+  export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "todo-frontend.fullname" . }})
+  export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+  echo "Visit http://$NODE_IP:$NODE_PORT to access the Todo App Frontend"
+
+  For Minikube, you can also use:
+  minikube service {{ include "todo-frontend.fullname" . }} --url
+{{- else if eq .Values.service.type "LoadBalancer" }}
+  NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+  You can watch the status by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "todo-frontend.fullname" . }}'
+  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "todo-frontend.fullname" . }} --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
+  echo "Visit http://$SERVICE_IP:{{ .Values.service.port }} to access the Todo App Frontend"
+{{- else if eq .Values.service.type "ClusterIP" }}
+  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "todo-frontend.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+  export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Release.Namespace }} $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  echo "Visit http://127.0.0.1:8080 to access the Todo App Frontend"
+  kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8080:$CONTAINER_PORT
+{{- end }}
+
+2. Check the deployment status:
+  kubectl get deployment {{ include "todo-frontend.fullname" . }} -n {{ .Release.Namespace }}
+
+3. View the pods:
+  kubectl get pods -l app=todo-frontend -n {{ .Release.Namespace }}
+
+4. Check the logs:
+  kubectl logs -l app=todo-frontend -n {{ .Release.Namespace }} --tail=50
+
+5. Test the health endpoint:
+  kubectl run curl-test --image=curlimages/curl --rm -it --restart=Never -- curl http://{{ include "todo-frontend.fullname" . }}:{{ .Values.service.port }}/api/health
+
+Thank you for deploying Todo App Frontend with Helm!

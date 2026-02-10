@@ -1,0 +1,140 @@
+# Default values for todo-backend
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Number of replicas for the backend deployment
+replicaCount: 2
+
+image:
+  # Docker image repository
+  repository: todo-backend
+  # Image pull policy - use "Never" for Minikube local images
+  pullPolicy: Never
+  # Image tag - overrides the image tag whose default is the chart appVersion
+  tag: "latest"
+
+# Image pull secrets for private registries (not needed for Minikube)
+imagePullSecrets: []
+
+# Override the name of the chart
+nameOverride: ""
+# Override the full name of the chart
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use
+  name: ""
+
+# Pod annotations
+podAnnotations: {}
+
+# Pod security context
+podSecurityContext: {}
+  # fsGroup: 2000
+
+# Container security context
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  # Service type - ClusterIP for internal access only
+  type: ClusterIP
+  # Internal service port
+  port: 8000
+  # Target port on the container
+  targetPort: 8000
+
+# Resource requests and limits
+resources:
+  # Resource limits - maximum resources the container can use
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  # Resource requests - guaranteed resources for the container
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+# Liveness probe configuration
+# Checks if the container is alive and restarts it if it fails
+livenessProbe:
+  httpGet:
+    path: /health
+    port: 8000
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 3
+
+# Readiness probe configuration
+# Checks if the container is ready to receive traffic
+readinessProbe:
+  httpGet:
+    path: /health
+    port: 8000
+  initialDelaySeconds: 10
+  periodSeconds: 5
+  timeoutSeconds: 3
+  successThreshold: 1
+  failureThreshold: 3
+
+# Autoscaling configuration (optional)
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+# Node selector for pod assignment
+nodeSelector: {}
+
+# Tolerations for pod assignment
+tolerations: []
+
+# Affinity rules for pod assignment
+affinity: {}
+
+# Environment variables (non-sensitive)
+env:
+  # Application environment
+  ENVIRONMENT: "production"
+  # Log level
+  LOG_LEVEL: "info"
+
+# Secrets (sensitive data)
+# IMPORTANT: Override these values using --set flags or a separate values file
+# Never commit actual secrets to version control
+secrets:
+  # PostgreSQL database connection string
+  # Example: postgresql://user:password@host:5432/database?sslmode=require
+  DATABASE_URL: ""
+
+  # Cohere API key for AI chatbot functionality
+  # Get your key from: https://dashboard.cohere.ai/api-keys
+  COHERE_API_KEY: ""
+
+  # Better Auth secret for authentication
+  # Generate with: openssl rand -base64 32
+  BETTER_AUTH_SECRET: ""
+
+  # JWT secret for token signing
+  # Generate with: openssl rand -base64 32
+  JWT_SECRET: ""
+
+# Usage example:
+# helm install todo-backend ./todo-backend \
+#   --set secrets.DATABASE_URL="postgresql://..." \
+#   --set secrets.COHERE_API_KEY="your-key" \
+#   --set secrets.BETTER_AUTH_SECRET="your-secret" \
+#   --set secrets.JWT_SECRET="your-jwt-secret"

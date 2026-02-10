@@ -1,0 +1,117 @@
+# Default values for todo-frontend
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Number of replicas for the frontend deployment
+replicaCount: 2
+
+image:
+  # Docker image repository
+  repository: todo-frontend
+  # Image pull policy - use "Never" for Minikube local images
+  pullPolicy: Never
+  # Image tag - overrides the image tag whose default is the chart appVersion
+  tag: "latest"
+
+# Image pull secrets for private registries (not needed for Minikube)
+imagePullSecrets: []
+
+# Override the name of the chart
+nameOverride: ""
+# Override the full name of the chart
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use
+  name: ""
+
+# Pod annotations
+podAnnotations: {}
+
+# Pod security context
+podSecurityContext: {}
+  # fsGroup: 2000
+
+# Container security context
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  # Service type - NodePort for external access in Minikube
+  type: NodePort
+  # Internal service port
+  port: 3000
+  # External NodePort - accessible via Minikube IP
+  nodePort: 30080
+  # Target port on the container
+  targetPort: 3000
+
+# Resource requests and limits
+resources:
+  # Resource limits - maximum resources the container can use
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  # Resource requests - guaranteed resources for the container
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+# Liveness probe configuration
+# Checks if the container is alive and restarts it if it fails
+livenessProbe:
+  httpGet:
+    path: /api/health
+    port: 3000
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 3
+
+# Readiness probe configuration
+# Checks if the container is ready to receive traffic
+readinessProbe:
+  httpGet:
+    path: /api/health
+    port: 3000
+  initialDelaySeconds: 10
+  periodSeconds: 5
+  timeoutSeconds: 3
+  successThreshold: 1
+  failureThreshold: 3
+
+# Autoscaling configuration (optional)
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+# Node selector for pod assignment
+nodeSelector: {}
+
+# Tolerations for pod assignment
+tolerations: []
+
+# Affinity rules for pod assignment
+affinity: {}
+
+# Environment variables
+env:
+  # Backend API URL - points to the backend service
+  NEXT_PUBLIC_API_URL: "http://todo-backend:8000"
+  # Node environment
+  NODE_ENV: "production"
+  # Log level
+  LOG_LEVEL: "info"

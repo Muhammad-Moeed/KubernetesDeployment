@@ -411,3 +411,135 @@ For issues, questions, or contributions, please open an issue on GitHub.
 **Built with ❤️ for Hackathon II: Evolution of Todo**
 
 **Bonus Features Earned**: +300 points (Urdu +100, Voice +200)
+
+## 🚢 Phase 4: Kubernetes Deployment
+
+### Deployment Architecture
+- **Container Orchestration**: Kubernetes (Minikube for local development)
+- **Package Manager**: Helm 3.x
+- **Container Images**: 
+  - Frontend: todo-frontend:latest (280MB)
+  - Backend: todo-backend:latest (282MB)
+- **Services**:
+  - Frontend: NodePort (port 30080) - External access
+  - Backend: ClusterIP (port 8000) - Internal only
+
+### Prerequisites
+- Docker Desktop or Docker Engine
+- Minikube v1.38.0+
+- kubectl v1.34.0+
+- Helm v4.1.0+
+
+### Quick Start (Kubernetes)
+
+1. **Start Minikube cluster:**
+```bash
+minikube start --cpus=2 --memory=4096
+```
+
+2. **Configure Docker to use Minikube's Docker daemon:**
+```bash
+eval $(minikube docker-env)
+```
+
+3. **Build Docker images:**
+```bash
+# Build frontend
+cd frontend
+docker build -t todo-frontend:latest .
+
+# Build backend
+cd ../backend
+docker build -t todo-backend:latest .
+```
+
+4. **Create namespace:**
+```bash
+kubectl create namespace todo-app
+kubectl config set-context --current --namespace=todo-app
+```
+
+5. **Deploy backend:**
+```bash
+helm install todo-backend helm/todo-backend \
+  --set secrets.DATABASE_URL="your-neon-database-url" \
+  --set secrets.COHERE_API_KEY="your-cohere-api-key" \
+  --set secrets.BETTER_AUTH_SECRET="your-auth-secret" \
+  --set secrets.JWT_SECRET="your-jwt-secret" \
+  --namespace todo-app
+```
+
+6. **Deploy frontend:**
+```bash
+helm install todo-frontend helm/todo-frontend --namespace todo-app
+```
+
+7. **Access the application:**
+```bash
+# Get Minikube IP
+minikube ip
+
+# Access at http://<minikube-ip>:30080
+# Or use:
+minikube service todo-frontend --url -n todo-app
+```
+
+### Deployment Status
+
+✅ **Current Deployment:**
+- Minikube Cluster: Running
+- Namespace: todo-app
+- Frontend: 2/2 pods Running
+- Backend: 2/2 pods Running
+- Health Probes: All passing
+- Resource Usage: Within limits
+
+### Scaling
+
+Scale frontend:
+```bash
+kubectl scale deployment todo-frontend --replicas=3 -n todo-app
+```
+
+Scale backend:
+```bash
+kubectl scale deployment todo-backend --replicas=3 -n todo-app
+```
+
+### Monitoring
+
+Check pod status:
+```bash
+kubectl get pods -n todo-app
+```
+
+View logs:
+```bash
+kubectl logs -l app=todo-frontend -n todo-app --tail=50
+kubectl logs -l app=todo-backend -n todo-app --tail=50
+```
+
+Check resource usage:
+```bash
+kubectl top pods -n todo-app
+```
+
+### Troubleshooting
+
+**Pods not starting:**
+```bash
+kubectl describe pod <pod-name> -n todo-app
+kubectl logs <pod-name> -n todo-app
+```
+
+**Service not accessible:**
+```bash
+kubectl get svc -n todo-app
+minikube service list
+```
+
+**Database connection issues:**
+```bash
+kubectl logs -l app=todo-backend -n todo-app | grep -i "database\|connection"
+```
+
