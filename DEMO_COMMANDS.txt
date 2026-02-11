@@ -1,0 +1,47 @@
+=== DEMO VIDEO COMMANDS (Copy-Paste Ready) ===
+
+Part 1: Cluster Status (1 minute)
+-----------------------------------
+minikube status
+kubectl get all -n todo-app
+kubectl get pods -n todo-app -o wide
+
+Part 2: Docker Images (30 seconds)
+-----------------------------------
+eval $(minikube docker-env)
+docker images | grep todo
+
+Part 3: Helm Charts (30 seconds)
+-----------------------------------
+ls -la helm/
+helm list -n todo-app
+
+Part 4: Application Access (1 minute)
+-----------------------------------
+minikube ip
+# Then open browser: http://192.168.67.2:30080
+
+Part 5: Resource Usage (30 seconds)
+-----------------------------------
+kubectl top pods -n todo-app
+kubectl get pods -n todo-app
+
+Part 6: Scaling Demo (1 minute)
+-----------------------------------
+kubectl scale deployment todo-frontend --replicas=3 -n todo-app
+kubectl get pods -n todo-app -l app=todo-frontend
+# Wait 10 seconds
+kubectl scale deployment todo-frontend --replicas=2 -n todo-app
+
+Part 7: Pod Recovery (1 minute)
+-----------------------------------
+kubectl get pods -n todo-app
+kubectl delete pod todo-backend-65655c5b64-7298l -n todo-app
+kubectl get pods -n todo-app -w
+# Wait 20 seconds, then Ctrl+C
+
+Part 8: Final Status (30 seconds)
+-----------------------------------
+kubectl get all -n todo-app
+echo "Deployment Complete!"
+

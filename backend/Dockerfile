@@ -16,8 +16,15 @@ RUN apt-get update && \
 # Copy requirements file
 COPY requirements.txt .
 
+# Improve pip resiliency on slow networks
+ENV PIP_DEFAULT_TIMEOUT=120 \
+  PIP_RETRIES=5 \
+  PIP_DISABLE_PIP_VERSION_CHECK=1
+
 # Install Python dependencies to user directory
-RUN pip install --user --no-cache-dir --no-warn-script-location -r requirements.txt
+RUN pip install --user --no-cache-dir --no-warn-script-location \
+  --timeout 120 --retries 5 \
+  -r requirements.txt
 
 # Stage 2: Production Runner
 FROM python:3.11-slim AS runner
@@ -38,6 +45,9 @@ COPY --from=builder /root/.local /home/appuser/.local
 
 # Copy application code
 COPY . .
+
+# Copy Environment variables file
+COPY .env .env
 
 # Set ownership to non-root user
 RUN chown -R appuser:appuser /app

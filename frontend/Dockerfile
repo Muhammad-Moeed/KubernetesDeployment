@@ -25,6 +25,9 @@ RUN npm ci --ignore-scripts
 # Copy application source
 COPY . .
 
+# Copy Environment variables file
+COPY .env .env
+
 # Set environment variables for build
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production

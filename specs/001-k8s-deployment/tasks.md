@@ -29,14 +29,14 @@ description: "Task list for Phase 4 Local Kubernetes Deployment"
 
 **Purpose**: Project initialization and prerequisite verification
 
-- [ ] T001 Verify Minikube is installed and accessible (minikube version)
-- [ ] T002 Verify Docker is installed and running (docker version)
-- [ ] T003 Verify kubectl is installed and configured (kubectl version)
-- [ ] T004 Verify Helm 3.x is installed (helm version)
-- [ ] T005 [P] Verify Gordon AI tool is available for Dockerfile generation
-- [ ] T006 [P] Verify kubectl-ai tool is available for AI-powered deployments
-- [ ] T007 [P] Verify kagent tool is available for cluster health checks
-- [ ] T008 Create helm/ directory structure for Helm charts
+- [x] T001 Verify Minikube is installed and accessible (minikube version)
+- [x] T002 Verify Docker is installed and running (docker version)
+- [x] T003 Verify kubectl is installed and configured (kubectl version)
+- [x] T004 Verify Helm 3.x is installed (helm version)
+- [x] T005 [P] Verify Gordon AI tool is available for Dockerfile generation
+- [x] T006 [P] Verify kubectl-ai tool is available for AI-powered deployments
+- [x] T007 [P] Verify kagent tool is available for cluster health checks
+- [x] T008 Create helm/ directory structure for Helm charts
 
 ---
 
@@ -46,12 +46,12 @@ description: "Task list for Phase 4 Local Kubernetes Deployment"
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T009 Verify Phase 3 chatbot application is functional (frontend and backend running locally)
-- [ ] T010 Verify DATABASE_URL environment variable is set and accessible
-- [ ] T011 Verify COHERE_API_KEY environment variable is set and valid
-- [ ] T012 Verify BETTER_AUTH_SECRET environment variable is set
-- [ ] T013 Test database connectivity from local machine to Neon PostgreSQL
-- [ ] T014 Test Cohere API connectivity from local machine
+- [x] T009 Verify Phase 3 chatbot application is functional (frontend and backend running locally)
+- [x] T010 Verify DATABASE_URL environment variable is set and accessible
+- [x] T011 Verify COHERE_API_KEY environment variable is set and valid
+- [x] T012 Verify BETTER_AUTH_SECRET environment variable is set
+- [x] T013 Test database connectivity from local machine to Neon PostgreSQL
+- [x] T014 Test Cohere API connectivity from local machine
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -65,22 +65,22 @@ description: "Task list for Phase 4 Local Kubernetes Deployment"
 
 ### Implementation for User Story 1
 
-- [ ] T015 [P] [US1] Generate optimized Dockerfile for Next.js frontend using Gordon AI in frontend/Dockerfile
-- [ ] T016 [P] [US1] Create .dockerignore file for frontend in frontend/.dockerignore
-- [ ] T017 [P] [US1] Generate optimized Dockerfile for FastAPI backend using Gordon AI in backend/Dockerfile
-- [ ] T018 [P] [US1] Create .dockerignore file for backend in backend/.dockerignore
-- [ ] T019 [US1] Configure Docker to use Minikube's Docker daemon (eval $(minikube docker-env))
-- [ ] T020 [US1] Build frontend Docker image with tag todo-frontend:latest
-- [ ] T021 [US1] Build backend Docker image with tag todo-backend:latest
-- [ ] T022 [US1] Verify frontend image size is under 200MB
-- [ ] T023 [US1] Verify backend image size is under 500MB
-- [ ] T024 [US1] Test frontend container locally with docker run (port 3000)
-- [ ] T025 [US1] Test backend container locally with docker run (port 8000, with env vars)
-- [ ] T026 [US1] Verify frontend health endpoint responds correctly (/api/health)
-- [ ] T027 [US1] Verify backend health endpoint responds correctly (/health)
-- [ ] T028 [US1] Verify application functionality in containers (authentication, tasks, chatbot)
-- [ ] T029 [US1] Load frontend image into Minikube registry
-- [ ] T030 [US1] Load backend image into Minikube registry
+- [x] T015 [P] [US1] Generate optimized Dockerfile for Next.js frontend using Gordon AI in frontend/Dockerfile
+- [x] T016 [P] [US1] Create .dockerignore file for frontend in frontend/.dockerignore
+- [x] T017 [P] [US1] Generate optimized Dockerfile for FastAPI backend using Gordon AI in backend/Dockerfile
+- [x] T018 [P] [US1] Create .dockerignore file for backend in backend/.dockerignore
+- [x] T019 [US1] Configure Docker to use Minikube's Docker daemon (eval $(minikube docker-env))
+- [x] T020 [US1] Build frontend Docker image with tag todo-frontend:latest
+- [x] T021 [US1] Build backend Docker image with tag todo-backend:latest
+- [x] T022 [US1] Verify frontend image size is under 200MB
+- [x] T023 [US1] Verify backend image size is under 500MB
+- [x] T024 [US1] Test frontend container locally with docker run (port 3000)
+- [x] T025 [US1] Test backend container locally with docker run (port 8000, with env vars)
+- [x] T026 [US1] Verify frontend health endpoint responds correctly (/api/health)
+- [x] T027 [US1] Verify backend health endpoint responds correctly (/health)
+- [x] T028 [US1] Verify application functionality in containers (authentication, tasks, chatbot)
+- [x] T029 [US1] Load frontend image into Minikube registry
+- [x] T030 [US1] Load backend image into Minikube registry
 
 **Checkpoint**: At this point, User Story 1 should be fully functional - Docker images built, tested, and loaded into Minikube
 
@@ -96,79 +96,79 @@ description: "Task list for Phase 4 Local Kubernetes Deployment"
 
 #### Helm Chart Creation
 
-- [ ] T031 [P] [US2] Create frontend Helm chart structure in helm/todo-frontend/
-- [ ] T032 [P] [US2] Create frontend Chart.yaml with metadata in helm/todo-frontend/Chart.yaml
-- [ ] T033 [P] [US2] Create frontend values.yaml with parameterized config in helm/todo-frontend/values.yaml
-- [ ] T034 [P] [US2] Create frontend Deployment template in helm/todo-frontend/templates/deployment.yaml
-- [ ] T035 [P] [US2] Create frontend Service template (NodePort) in helm/todo-frontend/templates/service.yaml
-- [ ] T036 [P] [US2] Create frontend ConfigMap template in helm/todo-frontend/templates/configmap.yaml
-- [ ] T037 [P] [US2] Create frontend helpers template in helm/todo-frontend/templates/_helpers.tpl
-- [ ] T038 [P] [US2] Create backend Helm chart structure in helm/todo-backend/
-- [ ] T039 [P] [US2] Create backend Chart.yaml with metadata in helm/todo-backend/Chart.yaml
-- [ ] T040 [P] [US2] Create backend values.yaml with parameterized config in helm/todo-backend/values.yaml
-- [ ] T041 [P] [US2] Create backend Deployment template in helm/todo-backend/templates/deployment.yaml
-- [ ] T042 [P] [US2] Create backend Service template (ClusterIP) in helm/todo-backend/templates/service.yaml
-- [ ] T043 [P] [US2] Create backend Secret template in helm/todo-backend/templates/secret.yaml
-- [ ] T044 [P] [US2] Create backend helpers template in helm/todo-backend/templates/_helpers.tpl
-- [ ] T045 [US2] Configure resource requests and limits in frontend values.yaml (256Mi/512Mi RAM, 0.25/0.5 CPU)
-- [ ] T046 [US2] Configure resource requests and limits in backend values.yaml (512Mi/1Gi RAM, 0.5/1 CPU)
-- [ ] T047 [US2] Configure liveness probe for frontend in deployment template (/api/health)
-- [ ] T048 [US2] Configure readiness probe for frontend in deployment template (/api/health)
-- [ ] T049 [US2] Configure liveness probe for backend in deployment template (/health)
-- [ ] T050 [US2] Configure readiness probe for backend in deployment template (/health)
-- [ ] T051 [US2] Validate frontend Helm chart with helm lint
-- [ ] T052 [US2] Validate backend Helm chart with helm lint
-- [ ] T053 [US2] Test frontend chart rendering with helm template
-- [ ] T054 [US2] Test backend chart rendering with helm template
+- [x] T031 [P] [US2] Create frontend Helm chart structure in helm/todo-frontend/
+- [x] T032 [P] [US2] Create frontend Chart.yaml with metadata in helm/todo-frontend/Chart.yaml
+- [x] T033 [P] [US2] Create frontend values.yaml with parameterized config in helm/todo-frontend/values.yaml
+- [x] T034 [P] [US2] Create frontend Deployment template in helm/todo-frontend/templates/deployment.yaml
+- [x] T035 [P] [US2] Create frontend Service template (NodePort) in helm/todo-frontend/templates/service.yaml
+- [x] T036 [P] [US2] Create frontend ConfigMap template in helm/todo-frontend/templates/configmap.yaml
+- [x] T037 [P] [US2] Create frontend helpers template in helm/todo-frontend/templates/_helpers.tpl
+- [x] T038 [P] [US2] Create backend Helm chart structure in helm/todo-backend/
+- [x] T039 [P] [US2] Create backend Chart.yaml with metadata in helm/todo-backend/Chart.yaml
+- [x] T040 [P] [US2] Create backend values.yaml with parameterized config in helm/todo-backend/values.yaml
+- [x] T041 [P] [US2] Create backend Deployment template in helm/todo-backend/templates/deployment.yaml
+- [x] T042 [P] [US2] Create backend Service template (ClusterIP) in helm/todo-backend/templates/service.yaml
+- [x] T043 [P] [US2] Create backend Secret template in helm/todo-backend/templates/secret.yaml
+- [x] T044 [P] [US2] Create backend helpers template in helm/todo-backend/templates/_helpers.tpl
+- [x] T045 [US2] Configure resource requests and limits in frontend values.yaml (256Mi/512Mi RAM, 0.25/0.5 CPU)
+- [x] T046 [US2] Configure resource requests and limits in backend values.yaml (512Mi/1Gi RAM, 0.5/1 CPU)
+- [x] T047 [US2] Configure liveness probe for frontend in deployment template (/api/health)
+- [x] T048 [US2] Configure readiness probe for frontend in deployment template (/api/health)
+- [x] T049 [US2] Configure liveness probe for backend in deployment template (/health)
+- [x] T050 [US2] Configure readiness probe for backend in deployment template (/health)
+- [x] T051 [US2] Validate frontend Helm chart with helm lint
+- [x] T052 [US2] Validate backend Helm chart with helm lint
+- [x] T053 [US2] Test frontend chart rendering with helm template
+- [x] T054 [US2] Test backend chart rendering with helm template
 
 #### Minikube Cluster Setup
 
-- [ ] T055 [US2] Start Minikube cluster with 2 CPU cores and 4GB RAM (minikube start --cpus=2 --memory=4096)
-- [ ] T056 [US2] Verify Minikube cluster is running (kubectl cluster-info)
-- [ ] T057 [US2] Enable metrics-server addon (minikube addons enable metrics-server)
-- [ ] T058 [US2] Create todo-app namespace using kubectl-ai
-- [ ] T059 [US2] Set kubectl context to todo-app namespace
+- [x] T055 [US2] Start Minikube cluster with 2 CPU cores and 4GB RAM (minikube start --cpus=2 --memory=4096)
+- [x] T056 [US2] Verify Minikube cluster is running (kubectl cluster-info)
+- [x] T057 [US2] Enable metrics-server addon (minikube addons enable metrics-server)
+- [x] T058 [US2] Create todo-app namespace using kubectl-ai
+- [x] T059 [US2] Set kubectl context to todo-app namespace
 
 #### Kubernetes Resources Deployment
 
-- [ ] T060 [US2] Create ConfigMap for frontend configuration (NEXT_PUBLIC_API_URL=http://todo-backend:8000)
-- [ ] T061 [US2] Create Secret for sensitive data (DATABASE_URL, COHERE_API_KEY, BETTER_AUTH_SECRET)
-- [ ] T062 [US2] Deploy backend using helm install with 2 replicas
-- [ ] T063 [US2] Wait for backend pods to reach Running state
-- [ ] T064 [US2] Verify backend pods are healthy (kubectl get pods -l app=todo-backend)
-- [ ] T065 [US2] Deploy frontend using helm install with 2 replicas
-- [ ] T066 [US2] Wait for frontend pods to reach Running state
-- [ ] T067 [US2] Verify frontend pods are healthy (kubectl get pods -l app=todo-frontend)
-- [ ] T068 [US2] Verify backend service is created (ClusterIP)
-- [ ] T069 [US2] Verify frontend service is created (NodePort on port 30080)
-- [ ] T070 [US2] Get Minikube IP address (minikube ip)
-- [ ] T071 [US2] Access frontend via Minikube IP (http://<minikube-ip>:30080)
+- [x] T060 [US2] Create ConfigMap for frontend configuration (NEXT_PUBLIC_API_URL=http://todo-backend:8000)
+- [x] T061 [US2] Create Secret for sensitive data (DATABASE_URL, COHERE_API_KEY, BETTER_AUTH_SECRET)
+- [x] T062 [US2] Deploy backend using helm install with 2 replicas
+- [x] T063 [US2] Wait for backend pods to reach Running state
+- [x] T064 [US2] Verify backend pods are healthy (kubectl get pods -l app=todo-backend)
+- [x] T065 [US2] Deploy frontend using helm install with 2 replicas
+- [x] T066 [US2] Wait for frontend pods to reach Running state
+- [x] T067 [US2] Verify frontend pods are healthy (kubectl get pods -l app=todo-frontend)
+- [x] T068 [US2] Verify backend service is created (ClusterIP)
+- [x] T069 [US2] Verify frontend service is created (NodePort on port 30080)
+- [x] T070 [US2] Get Minikube IP address (minikube ip)
+- [x] T071 [US2] Access frontend via Minikube IP (http://<minikube-ip>:30080)
 
 #### Deployment Validation
 
-- [ ] T072 [US2] Run kagent health-check on todo-app namespace
-- [ ] T073 [US2] Verify all pods show STATUS: Running and READY: 1/1
-- [ ] T074 [US2] Verify no pod restarts (RESTARTS: 0)
-- [ ] T075 [US2] Check backend pod logs for errors (kubectl logs -l app=todo-backend)
-- [ ] T076 [US2] Check frontend pod logs for errors (kubectl logs -l app=todo-frontend)
-- [ ] T077 [US2] Test backend health endpoint from within cluster (curl http://todo-backend:8000/health)
-- [ ] T078 [US2] Test frontend health endpoint from within cluster (curl http://todo-frontend:3000/api/health)
-- [ ] T079 [US2] Test frontend to backend connectivity
-- [ ] T080 [US2] Test backend to database connectivity (check logs for connection success)
-- [ ] T081 [US2] Verify external access to frontend via Minikube IP
+- [x] T072 [US2] Run kagent health-check on todo-app namespace
+- [x] T073 [US2] Verify all pods show STATUS: Running and READY: 1/1
+- [x] T074 [US2] Verify no pod restarts (RESTARTS: 0)
+- [x] T075 [US2] Check backend pod logs for errors (kubectl logs -l app=todo-backend)
+- [x] T076 [US2] Check frontend pod logs for errors (kubectl logs -l app=todo-frontend)
+- [x] T077 [US2] Test backend health endpoint from within cluster (curl http://todo-backend:8000/health)
+- [x] T078 [US2] Test frontend health endpoint from within cluster (curl http://todo-frontend:3000/api/health)
+- [x] T079 [US2] Test frontend to backend connectivity
+- [x] T080 [US2] Test backend to database connectivity (check logs for connection success)
+- [x] T081 [US2] Verify external access to frontend via Minikube IP
 
 #### Functionality Validation
 
-- [ ] T082 [US2] Test user registration via Kubernetes deployment
-- [ ] T083 [US2] Test user login via Kubernetes deployment
-- [ ] T084 [US2] Test task creation via Kubernetes deployment
-- [ ] T085 [US2] Test task listing via Kubernetes deployment
-- [ ] T086 [US2] Test task update via Kubernetes deployment
-- [ ] T087 [US2] Test task deletion via Kubernetes deployment
-- [ ] T088 [US2] Test chatbot functionality (English messages)
-- [ ] T089 [US2] Test chatbot functionality (Urdu messages)
-- [ ] T090 [US2] Test voice commands functionality
-- [ ] T091 [US2] Verify 100% Phase 3 feature parity
+- [x] T082 [US2] Test user registration via Kubernetes deployment
+- [x] T083 [US2] Test user login via Kubernetes deployment
+- [x] T084 [US2] Test task creation via Kubernetes deployment
+- [x] T085 [US2] Test task listing via Kubernetes deployment
+- [x] T086 [US2] Test task update via Kubernetes deployment
+- [x] T087 [US2] Test task deletion via Kubernetes deployment
+- [x] T088 [US2] Test chatbot functionality (English messages)
+- [x] T089 [US2] Test chatbot functionality (Urdu messages)
+- [x] T090 [US2] Test voice commands functionality
+- [x] T091 [US2] Verify 100% Phase 3 feature parity
 
 **Checkpoint**: At this point, User Story 2 should be fully functional - application deployed to Kubernetes and all features working
 
@@ -184,55 +184,55 @@ description: "Task list for Phase 4 Local Kubernetes Deployment"
 
 #### Scaling Operations
 
-- [ ] T092 [US3] Scale frontend deployment to 3 replicas using kubectl-ai
-- [ ] T093 [US3] Verify all 3 frontend pods reach Running state
-- [ ] T094 [US3] Verify traffic is distributed across frontend pods
-- [ ] T095 [US3] Scale backend deployment to 3 replicas using kubectl-ai
-- [ ] T096 [US3] Verify all 3 backend pods reach Running state
-- [ ] T097 [US3] Verify backend pods maintain database consistency
-- [ ] T098 [US3] Test application functionality with scaled deployment
-- [ ] T099 [US3] Scale frontend back down to 1 replica
-- [ ] T100 [US3] Scale backend back down to 1 replica
-- [ ] T101 [US3] Verify graceful pod termination during scale down
+- [x] T092 [US3] Scale frontend deployment to 3 replicas using kubectl-ai
+- [x] T093 [US3] Verify all 3 frontend pods reach Running state
+- [x] T094 [US3] Verify traffic is distributed across frontend pods
+- [x] T095 [US3] Scale backend deployment to 3 replicas using kubectl-ai
+- [x] T096 [US3] Verify all 3 backend pods reach Running state
+- [x] T097 [US3] Verify backend pods maintain database consistency
+- [x] T098 [US3] Test application functionality with scaled deployment
+- [x] T099 [US3] Scale frontend back down to 1 replica
+- [x] T100 [US3] Scale backend back down to 1 replica
+- [x] T101 [US3] Verify graceful pod termination during scale down
 
 #### Resource Monitoring
 
-- [ ] T102 [US3] Monitor frontend pod resource usage with kubectl top pods
-- [ ] T103 [US3] Monitor backend pod resource usage with kubectl top pods
-- [ ] T104 [US3] Verify frontend pods stay within limits (CPU <0.5, Memory <512Mi)
-- [ ] T105 [US3] Verify backend pods stay within limits (CPU <1, Memory <1Gi)
-- [ ] T106 [US3] Run kagent monitor-resources for 60 seconds
-- [ ] T107 [US3] Verify no OOMKilled events in pod status
+- [x] T102 [US3] Monitor frontend pod resource usage with kubectl top pods
+- [x] T103 [US3] Monitor backend pod resource usage with kubectl top pods
+- [x] T104 [US3] Verify frontend pods stay within limits (CPU <0.5, Memory <512Mi)
+- [x] T105 [US3] Verify backend pods stay within limits (CPU <1, Memory <1Gi)
+- [x] T106 [US3] Run kagent monitor-resources for 60 seconds
+- [x] T107 [US3] Verify no OOMKilled events in pod status
 
 #### Performance Testing
 
-- [ ] T108 [US3] Test frontend health endpoint response time (<100ms)
-- [ ] T109 [US3] Test backend health endpoint response time (<100ms)
-- [ ] T110 [US3] Run concurrent user test (10 users) using Apache Bench or similar
-- [ ] T111 [US3] Verify no failed requests during concurrent testing
-- [ ] T112 [US3] Verify no performance degradation under load
+- [x] T108 [US3] Test frontend health endpoint response time (<100ms)
+- [x] T109 [US3] Test backend health endpoint response time (<100ms)
+- [x] T110 [US3] Run concurrent user test (10 users) using Apache Bench or similar
+- [x] T111 [US3] Verify no failed requests during concurrent testing
+- [x] T112 [US3] Verify no performance degradation under load
 
 #### Resilience Testing
 
-- [ ] T113 [US3] Delete one backend pod to simulate failure
-- [ ] T114 [US3] Verify Kubernetes automatically creates replacement pod
-- [ ] T115 [US3] Verify replacement pod reaches Running state within 30 seconds
-- [ ] T116 [US3] Verify application remains accessible during pod recovery
-- [ ] T117 [US3] Verify zero data loss after pod recovery
-- [ ] T118 [US3] Delete one frontend pod to simulate failure
-- [ ] T119 [US3] Verify automatic frontend pod recovery
-- [ ] T120 [US3] Test liveness probe failure scenario (if possible)
-- [ ] T121 [US3] Test readiness probe failure scenario (if possible)
+- [x] T113 [US3] Delete one backend pod to simulate failure
+- [x] T114 [US3] Verify Kubernetes automatically creates replacement pod
+- [x] T115 [US3] Verify replacement pod reaches Running state within 30 seconds
+- [x] T116 [US3] Verify application remains accessible during pod recovery
+- [x] T117 [US3] Verify zero data loss after pod recovery
+- [x] T118 [US3] Delete one frontend pod to simulate failure
+- [x] T119 [US3] Verify automatic frontend pod recovery
+- [x] T120 [US3] Test liveness probe failure scenario (if possible)
+- [x] T121 [US3] Test readiness probe failure scenario (if possible)
 
 #### Rolling Update Testing
 
-- [ ] T122 [US3] Update frontend image tag to simulate new version
-- [ ] T123 [US3] Perform rolling update using helm upgrade
-- [ ] T124 [US3] Monitor rollout status (kubectl rollout status)
-- [ ] T125 [US3] Verify zero downtime during rolling update
-- [ ] T126 [US3] Verify all pods updated to new version
-- [ ] T127 [US3] Test rollback functionality (helm rollback)
-- [ ] T128 [US3] Verify successful rollback to previous version
+- [x] T122 [US3] Update frontend image tag to simulate new version
+- [x] T123 [US3] Perform rolling update using helm upgrade
+- [x] T124 [US3] Monitor rollout status (kubectl rollout status)
+- [x] T125 [US3] Verify zero downtime during rolling update
+- [x] T126 [US3] Verify all pods updated to new version
+- [x] T127 [US3] Test rollback functionality (helm rollback)
+- [x] T128 [US3] Verify successful rollback to previous version
 
 **Checkpoint**: At this point, User Story 3 should be fully functional - scaling, monitoring, and resilience validated
 
@@ -244,22 +244,22 @@ description: "Task list for Phase 4 Local Kubernetes Deployment"
 
 ### Documentation Updates
 
-- [ ] T129 [P] Update README.md with Phase 4 section in README.md
-- [ ] T130 [P] Add prerequisites section (Minikube, Docker, Helm, kubectl) to README.md
-- [ ] T131 [P] Add quick start guide for Kubernetes deployment to README.md
-- [ ] T132 [P] Add deployment commands to README.md
-- [ ] T133 [P] Add access instructions (Minikube IP) to README.md
-- [ ] T134 [P] Add troubleshooting tips to README.md
-- [ ] T135 [P] Create DEPLOYMENT.md with detailed step-by-step instructions
-- [ ] T136 [P] Document Minikube setup in DEPLOYMENT.md
-- [ ] T137 [P] Document Docker image building in DEPLOYMENT.md
-- [ ] T138 [P] Document Helm chart deployment in DEPLOYMENT.md
-- [ ] T139 [P] Document testing procedures in DEPLOYMENT.md
-- [ ] T140 [P] Document cleanup instructions in DEPLOYMENT.md
-- [ ] T141 [P] Document Gordon AI usage in DEPLOYMENT.md
-- [ ] T142 [P] Document kubectl-ai usage in DEPLOYMENT.md
-- [ ] T143 [P] Document kagent usage in DEPLOYMENT.md
-- [ ] T144 Update architecture diagrams with Kubernetes layer
+- [x] T129 [P] Update README.md with Phase 4 section in README.md
+- [x] T130 [P] Add prerequisites section (Minikube, Docker, Helm, kubectl) to README.md
+- [x] T131 [P] Add quick start guide for Kubernetes deployment to README.md
+- [x] T132 [P] Add deployment commands to README.md
+- [x] T133 [P] Add access instructions (Minikube IP) to README.md
+- [x] T134 [P] Add troubleshooting tips to README.md
+- [x] T135 [P] Create DEPLOYMENT.md with detailed step-by-step instructions
+- [x] T136 [P] Document Minikube setup in DEPLOYMENT.md
+- [x] T137 [P] Document Docker image building in DEPLOYMENT.md
+- [x] T138 [P] Document Helm chart deployment in DEPLOYMENT.md
+- [x] T139 [P] Document testing procedures in DEPLOYMENT.md
+- [x] T140 [P] Document cleanup instructions in DEPLOYMENT.md
+- [x] T141 [P] Document Gordon AI usage in DEPLOYMENT.md
+- [x] T142 [P] Document kubectl-ai usage in DEPLOYMENT.md
+- [x] T143 [P] Document kagent usage in DEPLOYMENT.md
+- [x] T144 Update architecture diagrams with Kubernetes layer
 
 ### Demo Video Creation
 
@@ -283,15 +283,15 @@ description: "Task list for Phase 4 Local Kubernetes Deployment"
 
 ### Final Submission Preparation
 
-- [ ] T162 Verify all source code is committed to repository
-- [ ] T163 Verify all Dockerfiles are committed (frontend/Dockerfile, backend/Dockerfile)
-- [ ] T164 Verify all Helm charts are committed (helm/todo-frontend/, helm/todo-backend/)
-- [ ] T165 Verify all specifications are committed (specs/001-k8s-deployment/)
-- [ ] T166 Verify CONSTITUTION.md includes Phase 4 principles
-- [ ] T167 Verify README.md is updated with Phase 4 content
-- [ ] T168 Verify DEPLOYMENT.md is created and complete
-- [ ] T169 Verify .gitignore excludes secrets and sensitive data
-- [ ] T170 Verify no hardcoded secrets in code or configs
+- [x] T162 Verify all source code is committed to repository
+- [x] T163 Verify all Dockerfiles are committed (frontend/Dockerfile, backend/Dockerfile)
+- [x] T164 Verify all Helm charts are committed (helm/todo-frontend/, helm/todo-backend/)
+- [x] T165 Verify all specifications are committed (specs/001-k8s-deployment/)
+- [x] T166 Verify CONSTITUTION.md includes Phase 4 principles
+- [x] T167 Verify README.md is updated with Phase 4 content
+- [x] T168 Verify DEPLOYMENT.md is created and complete
+- [x] T169 Verify .gitignore excludes secrets and sensitive data
+- [x] T170 Verify no hardcoded secrets in code or configs
 - [ ] T171 Make repository public on GitHub
 - [ ] T172 Test repository clone from fresh location
 - [ ] T173 Perform fresh Minikube deployment from repository

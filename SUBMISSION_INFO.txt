@@ -1,0 +1,41 @@
+=== SUBMISSION INFORMATION ===
+
+Repository URL:
+https://github.com/Muhammad-Moeed/KubernetesDeployment
+
+Demo Video URL:
+[PASTE YOUR YOUTUBE/DRIVE LINK HERE AFTER UPLOAD]
+
+Project Description (Copy this for submission):
+---
+Phase 4: Kubernetes Deployment - Todo AI Chatbot
+
+Technical Implementation:
+- Containerized Next.js frontend (280MB) and FastAPI backend (282MB)
+- Production-ready Helm charts with health probes
+- Deployed to Minikube with 2 replicas each
+- Tested horizontal scaling and pod recovery
+- 100% Phase 3 feature parity maintained
+
+Features:
+- Multi-user authentication
+- AI chatbot with natural language processing
+- Urdu language support
+- Voice commands
+- Kubernetes orchestration with auto-scaling
+
+Deployment Status:
+- 4 pods running (2 frontend, 2 backend)
+- All health checks passing
+- Zero downtime during scaling
+- Automatic pod recovery verified
+---
+
+Checklist Before Submitting:
+[ ] Repository is PUBLIC
+[ ] Demo video uploaded (5-10 minutes)
+[ ] Video is UNLISTED (not private)
+[ ] Both links tested in incognito window
+[ ] WhatsApp number is correct
+[ ] Form submitted before deadline
+
